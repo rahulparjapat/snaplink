@@ -3,35 +3,35 @@ import { useState } from 'react';
 const faqs = [
   {
     question: 'Is SnapLink completely free to use?',
-    answer: 'Yes! SnapLink is 100% free to use. You can shorten unlimited URLs without any registration or payment. We offer premium features for power users, but our core URL shortening service will always remain free.',
+    answer: 'Yes! SnapLink is 100% free to use. You can shorten unlimited URLs without any registration or payment. Our URL shortening service is powered by reliable third-party APIs to ensure your short links always work.',
   },
   {
-    question: 'How does a URL shortener work?',
-    answer: 'A URL shortener takes a long URL and creates a shorter, unique alias that redirects to the original link. When someone clicks the short link, our servers instantly redirect them to the original destination URL. This makes links easier to share on social media, in emails, and in text messages.',
+    question: 'How does the URL shortener work?',
+    answer: 'Simply paste your long URL into the input field and click "Shorten URL." Our service connects to trusted URL shortening APIs (like TinyURL) to generate a real, permanent short link. When someone clicks the short link, they are instantly redirected to the original destination.',
   },
   {
     question: 'Are shortened URLs safe and secure?',
-    answer: 'Absolutely! All SnapLink shortened URLs use HTTPS encryption. We automatically scan every URL for malware, phishing, and other security threats before generating a short link. Your data privacy is our top priority.',
+    answer: 'Absolutely! All shortened URLs use HTTPS encryption. We use trusted, well-known URL shortening services that scan URLs for malware and phishing threats. Your data privacy is our top priority.',
   },
   {
     question: 'Do shortened links expire?',
-    answer: 'No, SnapLink short links never expire. Once created, your shortened URLs will continue to work indefinitely. You can always access and manage your links from your dashboard.',
+    answer: 'No, the short links generated through SnapLink never expire. They are created through reliable services like TinyURL which maintain links permanently. Once created, your shortened URLs will continue to work indefinitely.',
   },
   {
-    question: 'Can I customize my short URLs?',
-    answer: 'Yes! SnapLink allows you to create custom aliases for your short URLs. Instead of a random string, you can use memorable words or phrases like "snplnk.co/my-brand" to make your links more professional and recognizable.',
+    question: 'Do the shortened links actually work?',
+    answer: 'Yes! Unlike some URL shorteners that only generate fake or demo links, SnapLink creates real, functional short links using the TinyURL API. Every link generated is immediately clickable and will redirect to your original URL.',
   },
   {
     question: 'Can I track clicks on my shortened links?',
-    answer: 'Yes! SnapLink provides detailed click analytics for all shortened URLs. You can see total clicks, geographic distribution, referral sources, device types, and more. Track your link performance in real-time.',
+    answer: 'The short links are generated through TinyURL which provides basic click tracking. For advanced analytics like geographic distribution, referral sources, and device types, we recommend creating a TinyURL account directly.',
   },
   {
-    question: 'Is there an API available?',
-    answer: 'Yes, SnapLink offers a RESTful API for developers who want to integrate URL shortening into their applications. Our API supports bulk URL shortening, custom aliases, and analytics retrieval.',
+    question: 'Is there a limit on how many URLs I can shorten?',
+    answer: 'There is no hard limit on the number of URLs you can shorten through SnapLink. However, to prevent abuse, the underlying API services may have rate limits. For typical usage, you can shorten hundreds of URLs without any issues.',
   },
   {
     question: 'What types of URLs can I shorten?',
-    answer: 'You can shorten any valid HTTP or HTTPS URL. This includes links to websites, blog posts, social media profiles, YouTube videos, documents, and more. We do not allow shortening of URLs that lead to illegal or harmful content.',
+    answer: 'You can shorten any valid HTTP or HTTPS URL. This includes links to websites, blog posts, social media profiles, YouTube videos, documents, and more. URLs that lead to illegal or harmful content may be rejected by the shortening service.',
   },
 ];
 

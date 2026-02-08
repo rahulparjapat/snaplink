@@ -2,7 +2,7 @@ const steps = [
   {
     step: '01',
     title: 'Paste Your URL',
-    description: 'Copy your long URL and paste it into the input field above. We support all valid HTTP and HTTPS URLs.',
+    description: 'Copy your long URL and paste it into the input field. We support all valid HTTP and HTTPS URLs from any website.',
     icon: (
       <svg className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
@@ -12,7 +12,7 @@ const steps = [
   {
     step: '02',
     title: 'Click Shorten',
-    description: 'Hit the "Shorten URL" button and we\'ll instantly generate a unique, compact short link for you to use.',
+    description: 'Hit the "Shorten URL" button. We\'ll use real API services like TinyURL to generate a genuine, permanent short link for you.',
     icon: (
       <svg className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" />
@@ -21,8 +21,8 @@ const steps = [
   },
   {
     step: '03',
-    title: 'Share & Track',
-    description: 'Copy your shortened link and share it anywhere! Track clicks and engagement in real-time.',
+    title: 'Copy & Share',
+    description: 'Your real short link is ready! Copy it with one click and share it anywhere — social media, emails, texts, or anywhere else.',
     icon: (
       <svg className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
@@ -42,7 +42,7 @@ export function HowItWorks() {
             Three Simple <span className="gradient-text">Steps</span>
           </h2>
           <p className="mt-4 text-lg text-gray-600">
-            Shorten any URL in seconds. No signup required, no complicated setup.
+            Shorten any URL in seconds with real, working short links. No signup required.
           </p>
         </div>
 

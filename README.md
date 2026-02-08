@@ -1,6 +1,6 @@
 # 🔗 SnapLink — Free URL Shortener
 
-> A professional, SEO-optimized, and Google AdSense-integrated URL shortener built with React, Vite, TypeScript, and Tailwind CSS. Ready to deploy on Vercel.
+> A professional, SEO-optimized, and Google AdSense-integrated URL shortener that creates **real, working short links** using the TinyURL API. Built with React, Vite, TypeScript, and Tailwind CSS. Ready to deploy on Vercel.
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/your-repo/snaplink)
 
@@ -16,6 +16,7 @@
 
 - [Overview](#overview)
 - [Features](#features)
+- [How the URL Shortener Works](#how-the-url-shortener-works)
 - [Tech Stack](#tech-stack)
 - [Project Structure](#project-structure)
 - [Getting Started](#getting-started)
@@ -32,20 +33,23 @@
 
 ## Overview
 
-**SnapLink** is a full-featured, client-side URL shortener web application designed for production deployment. It features a beautiful, responsive UI, comprehensive SEO optimization, Google AdSense monetization, and Google Search Console integration — all packaged in a single-page React application ready for Vercel deployment.
+**SnapLink** is a full-featured URL shortener web application that generates **real, working short links** using the TinyURL API (with is.gd as fallback). It features a beautiful, responsive UI, comprehensive SEO optimization, Google AdSense monetization, and Google Search Console integration — all packaged in a single-page React application ready for Vercel deployment.
 
 ---
 
 ## ✨ Features
 
 ### Core Functionality
-- ✅ **URL Shortening** — Instantly shorten any valid HTTP/HTTPS URL
-- ✅ **Custom Aliases** — Create branded short links with custom slugs (min 3 chars)
+- ✅ **Real URL Shortening** — Uses TinyURL API to generate actual, permanent short links
+- ✅ **Fallback API** — Automatically switches to is.gd API if TinyURL is unavailable
 - ✅ **URL Validation** — Smart validation with auto-prefix `https://` support
+- ✅ **Duplicate Detection** — Prevents shortening the same URL twice
 - ✅ **Copy to Clipboard** — One-click copy with visual feedback (supports fallback for older browsers)
+- ✅ **Visit Link** — Open shortened link in a new tab directly
 - ✅ **Delete Links** — Remove individual links or clear all at once
-- ✅ **Loading States** — Animated spinner during link generation
-- ✅ **Error Handling** — Descriptive error messages for invalid input, duplicate aliases, etc.
+- ✅ **Loading States** — Animated spinner during API call
+- ✅ **Error Handling** — Descriptive error messages for invalid input, network errors, API failures
+- ✅ **Timestamps** — Shows creation date and time for each link
 
 ### User Interface
 - ✅ **Responsive Design** — Fully responsive across mobile, tablet, and desktop
@@ -59,6 +63,7 @@
 - ✅ **CTA Section** — Bold call-to-action with gradient background and dot pattern
 - ✅ **Footer** — Full footer with social links, navigation columns, and legal links
 - ✅ **Back to Top** — Floating button with scroll-aware visibility (appears after 400px scroll)
+- ✅ **Trust Badges** — SSL Encrypted, Instant Results, 100% Free badges
 
 ### Animations
 - ✅ `slide-up` — Element entrance animation
@@ -67,6 +72,35 @@
 - ✅ `pulse-glow` — Pulsing glow effect
 - ✅ `shimmer` — Loading shimmer effect
 - ✅ Hover transitions on all interactive elements
+
+---
+
+## 🔧 How the URL Shortener Works
+
+SnapLink uses **real URL shortening APIs** to generate working short links:
+
+### API Flow
+```
+User enters URL → Validate URL → Call TinyURL API → Return short link
+                                       ↓ (if fails)
+                                  Call is.gd API → Return short link
+                                       ↓ (if fails)
+                                  Show error message
+```
+
+### APIs Used
+
+| API | Endpoint | Key Required | Rate Limit |
+|---|---|---|---|
+| **TinyURL** (Primary) | `https://tinyurl.com/api-create.php` | No | ~600/day |
+| **is.gd** (Fallback) | `https://is.gd/create.php` | No | ~1000/day |
+
+### Key Features
+- **Auto-prefix**: URLs without `http://` or `https://` automatically get `https://` prepended
+- **Validation**: Uses the `URL` constructor to validate URLs before API calls
+- **Duplicate check**: Prevents shortening the same URL twice in one session
+- **Error handling**: Catches network errors, API failures, and invalid responses
+- **Fallback chain**: If TinyURL fails, automatically tries is.gd
 
 ---
 
@@ -80,6 +114,8 @@
 | **Tailwind CSS** | 4.x | Utility-first CSS |
 | **clsx** | 2.x | Conditional class names |
 | **tailwind-merge** | 3.x | Merge Tailwind classes |
+| **TinyURL API** | — | Primary URL shortening |
+| **is.gd API** | — | Fallback URL shortening |
 
 ---
 
@@ -90,7 +126,8 @@ snaplink/
 ├── public/
 │   ├── google7e64d7513cc35712.html    # Google Search Console verification
 │   ├── robots.txt                      # Search engine crawl rules
-│   └── sitemap.xml                     # XML sitemap for SEO
+│   ├── sitemap.xml                     # XML sitemap for SEO
+│   └── vercel.json                     # Vercel SPA routing & headers
 ├── src/
 │   ├── components/
 │   │   ├── AdBanner.tsx               # Google AdSense ad component
@@ -102,7 +139,7 @@ snaplink/
 │   │   ├── Hero.tsx                   # Hero/landing section
 │   │   ├── HowItWorks.tsx            # 3-step guide section
 │   │   ├── Testimonials.tsx           # User reviews section
-│   │   └── URLShortener.tsx           # Main URL shortener tool
+│   │   └── URLShortener.tsx           # Main URL shortener (TinyURL API)
 │   ├── utils/
 │   │   └── cn.ts                      # Tailwind class merge utility
 │   ├── App.tsx                        # Root application component
@@ -222,11 +259,6 @@ Also included as a meta tag in `index.html`:
 4. The verification file and meta tag are already in place
 5. Click **Verify** — your site should be verified immediately
 
-### To Use Your Own Verification
-Replace the verification file name and content in:
-- `public/google7e64d7513cc35712.html` (rename the file)
-- `index.html` (update the `google-site-verification` meta tag)
-
 ---
 
 ## 🎯 SEO Optimization
@@ -251,19 +283,8 @@ Replace the verification file name and content in:
 
 ### Structured Data (JSON-LD)
 
-**1. WebApplication Schema**
-```json
-{
-  "@type": "WebApplication",
-  "name": "SnapLink",
-  "applicationCategory": "UtilityApplication",
-  "aggregateRating": { "ratingValue": "4.8", "ratingCount": "12540" }
-}
-```
-
-**2. FAQPage Schema**
-- 3 FAQ entries with questions and answers
-- Enables FAQ rich snippets in Google Search results
+**1. WebApplication Schema** — Marks the site as a web app in Google
+**2. FAQPage Schema** — Enables FAQ rich snippets in Google Search results (4 questions)
 
 ### Additional SEO Files
 - **`robots.txt`** — Allows all crawlers, references sitemap
@@ -273,7 +294,6 @@ Replace the verification file name and content in:
 - Proper heading hierarchy: `h1` → `h2` → `h3`
 - Semantic elements: `<header>`, `<main>`, `<section>`, `<footer>`, `<nav>`, `<article>`, `<blockquote>`
 - ARIA labels and roles on all interactive elements
-- Alt text and accessible names throughout
 
 ---
 
@@ -295,16 +315,6 @@ vercel
 vercel --prod
 ```
 
-### Vercel Configuration (auto-detected)
-Vercel automatically detects Vite projects. No additional configuration needed.
-
-| Setting | Value |
-|---|---|
-| **Framework** | Vite |
-| **Build Command** | `npm run build` |
-| **Output Directory** | `dist` |
-| **Install Command** | `npm install` |
-
 ### Post-Deployment Checklist
 1. ✅ Update canonical URLs in `index.html` to your actual domain
 2. ✅ Update `og:url` and `twitter:url` meta tags
@@ -313,36 +323,38 @@ Vercel automatically detects Vite projects. No additional configuration needed.
 5. ✅ Verify site in Google Search Console
 6. ✅ Submit sitemap in Search Console
 7. ✅ Verify AdSense is serving ads (may take 24-48 hours)
+8. ✅ Test URL shortening is working (paste a URL and click Shorten)
 
 ---
 
 ## 🎨 Customization
 
 ### Changing the Brand Name
-To rename "SnapLink" to your brand:
+To rename "SnapLink" to your brand, update these files:
 
-1. **`index.html`** — Update all `<title>`, `<meta>`, and JSON-LD references
-2. **`src/components/Header.tsx`** — Update logo text
-3. **`src/components/Footer.tsx`** — Update footer brand
-4. **`src/components/FAQ.tsx`** — Update FAQ text
-5. **`src/components/CTA.tsx`** — Update CTA text
-6. **`src/components/Testimonials.tsx`** — Update testimonial quotes
-7. **`src/components/URLShortener.tsx`** — Update domain reference
-8. **`public/robots.txt`** — Update sitemap URL
-9. **`public/sitemap.xml`** — Update site URL
+1. **`index.html`** — All `<title>`, `<meta>`, and JSON-LD references
+2. **`src/components/Header.tsx`** — Logo text
+3. **`src/components/Footer.tsx`** — Footer brand
+4. **`src/components/FAQ.tsx`** — FAQ text references
+5. **`src/components/CTA.tsx`** — CTA text
+6. **`src/components/Testimonials.tsx`** — Testimonial quotes
+7. **`public/robots.txt`** — Sitemap URL
+8. **`public/sitemap.xml`** — Site URL
+
+### Changing the URL Shortening API
+Edit `src/components/URLShortener.tsx`:
+- `shortenWithTinyURL()` — Primary API call
+- `shortenWithIsGd()` — Fallback API call
+- `shortenUrl()` — Orchestrates the API chain
 
 ### Changing Colors
 Edit `src/index.css` to modify the theme:
-
 ```css
 @theme {
   --color-primary-500: #3b82f6;  /* Main brand blue */
   --color-accent-500: #8b5cf6;   /* Accent purple */
 }
 ```
-
-### Adding Pages
-Add new components in `src/components/` and import them in `src/App.tsx`.
 
 ---
 
@@ -355,7 +367,6 @@ Add new components in `src/components/` and import them in `src/App.tsx`.
 - **CSS purging** — Tailwind CSS automatically removes unused styles
 - **Tree shaking** — Vite removes dead code from the bundle
 - **Passive event listeners** — Scroll handlers use `{ passive: true }`
-- **Lazy animations** — CSS animations only trigger when elements appear
 
 ### Lighthouse Score Targets
 | Metric | Target |
@@ -373,10 +384,9 @@ Add new components in `src/components/` and import them in `src/App.tsx`.
 - **ARIA labels** on all buttons, links, and interactive elements
 - **ARIA expanded** on accordion and mobile menu toggles
 - **ARIA roles** (`alert`, `contentinfo`, `navigation`, `region`, `list`, `listitem`)
-- **Semantic HTML** throughout (no `div` soup)
+- **Semantic HTML** throughout
 - **Focus indicators** on all interactive elements
 - **Color contrast** meets WCAG AA standards
-- **Screen reader** friendly text alternatives
 
 ---
 
@@ -395,12 +405,6 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 3. Commit your changes (`git commit -m 'Add amazing feature'`)
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
-
----
-
-## 📧 Support
-
-If you have any questions or need help, please [open an issue](https://github.com/your-repo/snaplink/issues) on GitHub.
 
 ---
 
